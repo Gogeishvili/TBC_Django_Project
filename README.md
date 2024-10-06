@@ -12,8 +12,7 @@ This is a basic Django project that contains two applications: `store` and `orde
 1. Clone the repository:
 
     ```bash
-    git clone <your-repo-url>
-    cd <your-repo-directory>
+    git clone <[your-repo-url](https://github.com/Gogeishvili/TBC_Django_Project.git)>
     ```
 
 2. Install the dependencies:
@@ -53,6 +52,3 @@ This is a basic Django project that contains two applications: `store` and `orde
 - `/order/`: Access the order's index page.
 - `/order/about/`: Access the order's about page.
 
-## License
-
-This project is licensed under the MIT License.
