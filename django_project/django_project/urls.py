@@ -16,16 +16,14 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.shortcuts import redirect
 from django.urls import path, include
 
-def redirect_to_store(request):
-    return redirect('/admin/')
+
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    
     path('store/', include('store.urls')),
     path('order/', include('order.urls')),
-    path('',redirect_to_store)
+    path('', admin.site.urls),
 ]
 
