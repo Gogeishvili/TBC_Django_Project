@@ -8,10 +8,36 @@ def index(request):
 
 
 def products(request):
-    products = Product.objects.all().values()
-    return JsonResponse({"Products": list(products)})
+    products = Product.objects.all()
+    products_list = []
+
+    for product in products:
+        categories_data = [
+            {"id": category.id, "name": category.name} 
+            for category in product.category.all()
+        ]
+
+        if categories_data:
+            products_list.append({
+                "id": product.id,
+                "name": product.name,
+                "categories": categories_data  
+            })
+
+    return JsonResponse({"Products": products_list})
 
 
 def categories(request):
-    categories = Category.objects.all().values()
-    return JsonResponse({"Categories": list(categories)})
+    categories = Category.objects.all()
+    categories_list = []
+    for category in categories:
+        if category.parent:
+            parent_data = {"id": category.parent.id, "name": category.parent.name}
+        else:
+            parent_data = None
+
+        categories_list.append(
+            {"id": category.id, "name": category.name, "parent": parent_data}
+        )
+
+    return JsonResponse({"":categories_list})
