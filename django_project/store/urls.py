@@ -3,10 +3,8 @@ from django.urls import path
 from store import views
 
 
-
-app_name = 'store'
-
 urlpatterns = [
     path("", views.index, name="index"),
-    path("about/", views.about, name="about"),
+    path("product/info/", views.products, name="products"),
+    path("category/info/", views.categories, name="categories"),
 ]

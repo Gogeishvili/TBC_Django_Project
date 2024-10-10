@@ -12,7 +12,7 @@ This is a basic Django project that contains two applications: `store` and `orde
 1. Clone the repository:
 
     ```bash
-    git clone <[your-repo-url](https://github.com/Gogeishvili/TBC_Django_Project.git)>
+    git clone <(https://github.com/Gogeishvili/TBC_Django_Project.git)>
     ```
 
 2. Install the dependencies:
