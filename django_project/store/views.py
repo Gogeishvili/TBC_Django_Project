@@ -21,10 +21,11 @@ def products(request):
             products_list.append({
                 "id": product.id,
                 "name": product.name,
+                "image_URL":request.build_absolute_uri(product.image.url) if product.image else None,
                 "categories": categories_data  
             })
 
-    return JsonResponse({"Products": products_list})
+    return JsonResponse(products_list,safe=False)
 
 
 def categories(request):
@@ -40,4 +41,4 @@ def categories(request):
             {"id": category.id, "name": category.name, "parent": parent_data}
         )
 
-    return JsonResponse({"":categories_list})
+    return JsonResponse(categories_list,safe=False)
