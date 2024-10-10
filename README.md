@@ -1,54 +1,24 @@
-# Django Project with Store and Order Apps
+# Django Project
 
-This is a basic Django project that contains two applications: `store` and `order`. Each app has two views: `index` and `about`.
+This project consists of two main apps: **store** and **order**.
 
-## Project Structure
+## Store App
 
+### Models
 
+- **Category**: Manages product categories with hierarchical relationships.
+- **Product**: Represents products with an image and associated categories.
 
+### URLs
+
+- `/store/`: Home page
+- `/store/product/info/`: Product information endpoint
+- `/store/category/info/`: Category information endpoint
 
 ## Installation
 
-1. Clone the repository:
-
-    ```bash
-    git clone <(https://github.com/Gogeishvili/TBC_Django_Project.git)>
-    ```
-
-2. Install the dependencies:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3. Apply migrations:
-
-    ```bash
-    python manage.py migrate
-    ```
-
-4. Run the development server:
-
-    ```bash
-    python manage.py runserver
-    ```
-
-## Applications
-
-### 1. `store`
-
-- **Index View**: Displays "Store index page".
-- **About View**: Displays "Store about page".
-
-### 2. `order`
-
-- **Index View**: Displays "Order index page".
-- **About View**: Displays "Order about page".
-
-## URLs
-
-- `/store/`: Access the store's index page.
-- `/store/about/`: Access the store's about page.
-- `/order/`: Access the order's index page.
-- `/order/about/`: Access the order's about page.
+1. Clone the repository.
+2. Install dependencies: `pip install -r requirements.txt`.
+3. Run migrations: `python manage.py migrate`.
+4. Start the server: `python manage.py runserver`.
 
