@@ -4,7 +4,9 @@ from store.models import Product, Category
 
 
 def index(request):
-    return HttpResponse("THIS IS STORE MAIN PAGE")
+    return render(request,'index.html',{
+        'categories':list(Category.objects.values('name'))
+    })
 
 
 def products(request):
