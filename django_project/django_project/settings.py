@@ -143,8 +143,4 @@ INTERNAL_IPS = [
     # ...
 ]
 
-# DEBUG_TOOLBAR_PANELS = [
-#     'debug_toolbar.panels.sql.SQLPanel',
-#     # Other panels...
-# ]
 
