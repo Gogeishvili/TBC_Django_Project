@@ -4,7 +4,7 @@ from store.models import Product, Category
 
 
 def index(request):
-    products=Product.objects.all()
+    products=Product.objects.prefetch_related('category').all()
     return render(request,'index.html',{
         'products': products
     })

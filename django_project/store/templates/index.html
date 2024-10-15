@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-    {% if products %}
-        {% for product in products %}
-            <div>{{ product.name }} - {{ product.price }}</div>
-        {% endfor %}
-    {% else %}
-        <p>No products found.</p>
-    {% endif %}
+{% for product in products %}
+    <div>
+        <p>
+            {{ product.name }}
+        </p>
+        <div>
+            categories:
+            <ul>
+                {% for cat in product.category.all %}
+                    <li>
+                        {{ cat.name }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endfor %}
 </body>
 </html>
