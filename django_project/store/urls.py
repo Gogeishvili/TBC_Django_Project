@@ -3,7 +3,7 @@ from store import views
 
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("index/", views.index, name="index"),
     path("product/info/", views.products, name="products"),
     path("category/info/", views.categories, name="categories"),
 ]
