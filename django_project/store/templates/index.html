@@ -5,6 +5,12 @@
   <title>Title</title>
 </head>
 <body>
-
+    {% if products %}
+        {% for product in products %}
+            <div>{{ product }}</div>
+        {% endfor %}
+    {% else %}
+        <p>No products found.</p>
+    {% endif %}
 </body>
 </html>

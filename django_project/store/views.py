@@ -4,8 +4,9 @@ from store.models import Product, Category
 
 
 def index(request):
+    products=Product.objects.all()
     return render(request,'index.html',{
-        'categories':list(Category.objects.values('name'))
+        'products': products
     })
 
 
