@@ -11,9 +11,9 @@
             <h2>Category: {{ category.name }}</h2>
             <ul>
                 {% for product in category.product_set.all %}
-                    <li>{{ product.name }} - ${{ product.price }}</li>
+                    <li>{{ product.name }} - ${{ product.price }} {{product.sub_total}}</li>
                 {% empty %}
-                    <li>No products available in this category.</li>
+                <li>{{ product.name }} - ${{ product.price }} {{product.sub_total}}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -22,7 +22,7 @@
 
     
     {% for c in categories %}
-    <h2>{{ c.name }}</h2>
+    <h2>{{ c.name}} {{c.products_coun}} </h2>
     <ul>
         {% for product in c.products.all %}
             <li>{{ product.name }} - ${{ product.price }}</li>

@@ -1,11 +1,12 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from store.models import Product, Category
+from django.db.models import *
 
 
 def index(request):
     categories = Category.objects.prefetch_related('products')
-    products = Product.objects.prefetch_related('category')
+    products = Product.objects.prefetch_related('category').annotate(total=F("quantity")*F("price")).aggregate(sub_total=Sum('total'))
 
     return render(request, 'index.html', {
         'categories': categories,
