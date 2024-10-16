@@ -5,20 +5,24 @@ from django.db.models import *
 
 
 def product(request):
-    categories = Category.objects.prefetch_related("products")
-    products = (
-        Product.objects.prefetch_related("category")
-        .annotate(total=F("quantity") * F("price"))
-        .aggregate(sub_total=Sum("total"))
-    )
-
+    products = Product.objects.all()
     return render(
-        request, "product.html", {"categories": categories, "products": products}
+        request, "product.html", {"products": products}
     )
 
 
 def product_of_category(request):
-    return render(request, "productsOfCategory.html", {})
+    category_summary = Category.objects.get_category_summary()
+    most_expensive = Category.objects.get_most_expensive_product()
+    cheapest = Category.objects.get_cheapest_product()
+    average_price = Category.objects.get_average_product_price()
+
+    return render(request, "productsOfCategory.html", {
+        'category_summary': category_summary,
+        'most_expensive': most_expensive,
+        'cheapest': cheapest,
+        'average_price': average_price
+    })
 
 
 def category(request):
