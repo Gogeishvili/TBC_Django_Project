@@ -5,6 +5,13 @@
     <title>Categories</title>
 </head>
 <body>
-    category
+    <h1>Categories Without Parent</h1>
+    <ul>
+        {% for category in categories_without_parent %}
+            <li>{{ category.name }}</li>
+        {% empty %}
+            <li>No categories without a parent found.</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

@@ -13,7 +13,7 @@ def product(request):
     )
 
     return render(
-        request, "index.html", {"categories": categories, "products": products}
+        request, "product.html", {"categories": categories, "products": products}
     )
 
 
@@ -21,10 +21,10 @@ def product_of_category(request):
     return render(request, "productsOfCategory.html", {})
 
 
-
-
-
 def category(request):
-    return render(request, "category.html", {})
-
-
+    categories_without_parent = Category.objects.filter(parent__isnull=True)
+    return render(
+        request,
+        "category.html",
+        {"categories_without_parent": categories_without_parent},
+    )
