@@ -3,9 +3,9 @@ from store import views
 
 
 urlpatterns = [
-    path("index/", views.index, name="index"),
-    path("product/info/", views.products, name="products"),
-    path("category/info/", views.categories, name="categories"),
+    path("product/", views.product, name="product"),
+    path("category/", views.category, name="categories"),
+    path("category/product/", views.product_of_category, name="products_of_category"),
 ]
 
 

@@ -1,8 +1,6 @@
 from math import trunc
-
 from django.db import models
-
-from store.Managers import ProductManager
+from store.Managers import ProductManager, CategoryManager
 
 
 # Create your models here.
@@ -15,6 +13,8 @@ class Category(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    objects = CategoryManager()
+
 
 class Product(models.Model):
     name = models.CharField(max_length=30)
@@ -26,5 +26,5 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.name}"
-    
-    objects=ProductManager()
+
+    objects = ProductManager()
