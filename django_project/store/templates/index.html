@@ -2,25 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Categories and Products</title>
 </head>
 <body>
-{% for product in products %}
-    <div>
-        <p>
-            {{ product.name }}
-        </p>
+    <h1>Categories and Their Products</h1>
+    {% for category in categories %}
         <div>
-            categories:
+            <h2>Category: {{ category.name }}</h2>
             <ul>
-                {% for cat in product.category.all %}
-                    <li>
-                        {{ cat.name }}
-                    </li>
+                {% for product in category.product_set.all %}
+                    <li>{{ product.name }} - ${{ product.price }}</li>
+                {% empty %}
+                    <li>No products available in this category.</li>
                 {% endfor %}
             </ul>
         </div>
-    </div>
+        <hr>
+    {% endfor %}
+
+    
+    {% for c in categories %}
+    <h2>{{ c.name }}</h2>
+    <ul>
+        {% for product in c.products.all %}
+            <li>{{ product.name }} - ${{ product.price }}</li>
+        {% endfor %}
+    </ul>
 {% endfor %}
 </body>
 </html>

@@ -4,8 +4,11 @@ from store.models import Product, Category
 
 
 def index(request):
-    products=Product.objects.prefetch_related('category').all()
-    return render(request,'index.html',{
+    categories = Category.objects.prefetch_related('products')
+    products = Product.objects.prefetch_related('category')
+
+    return render(request, 'index.html', {
+        'categories': categories,
         'products': products
     })
 

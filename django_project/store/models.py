@@ -16,7 +16,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=30)
-    category = models.ManyToManyField(Category)
+    category = models.ManyToManyField(Category,related_name='products')
     image = models.ImageField(upload_to="product/", blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     quantity = models.IntegerField(default=0)
