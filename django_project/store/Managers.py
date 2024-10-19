@@ -3,7 +3,12 @@ from django.db import models
 
 class ProductManager(models.Manager):
 
-    def get_products_info_List(self):
+    def product_test(self):
+        product=self.all().values()
+        return list(product)
+
+
+    def get_products_JSON(self):
         products = self.all()
         data = []
         for product in products:
@@ -28,7 +33,11 @@ class ProductManager(models.Manager):
 
 class CategoryManager(models.Manager):
 
-    def get_category_info_list(self):
+    def category_test(self):
+        categories=self.all().values()
+        return list(categories)
+
+    def get_category_JSON(self):
         categories = self.all()
         data = []
         for category in categories:

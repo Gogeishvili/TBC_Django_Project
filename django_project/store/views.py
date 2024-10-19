@@ -4,13 +4,26 @@ from store.models import Product, Category
 from django.db.models import *
 
 
-def product_JSON(request):
-    products = Product.objects.get_products_info_List()
+def product_test(request):
+    products = Product.objects.product_test()
     return JsonResponse(products, safe=False)
 
+
+def category_test(request):
+    catgories = Category.objects.category_test()
+    for c in catgories:
+        print(f'{type(c)} --- {c}')
+    return JsonResponse(catgories, safe=False)
+
+
+def product_JSON(request):
+    products = Product.objects.get_products_JSON()
+    return JsonResponse(products, safe=False)
+
+
 def category_JSON(request):
-    categories=Category.objects.get_category_info_list()
-    return JsonResponse(categories,safe=False)
+    categories = Category.objects.get_category_JSON()
+    return JsonResponse(categories, safe=False)
 
 
 def product(request):
