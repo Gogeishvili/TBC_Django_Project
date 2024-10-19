@@ -8,6 +8,10 @@ def product_JSON(request):
     products = Product.objects.get_products_info_List()
     return JsonResponse(products, safe=False)
 
+def category_JSON(request):
+    categories=Category.objects.get_category_info_list()
+    return JsonResponse(categories,safe=False)
+
 
 def product(request):
     products = Product.objects.all()

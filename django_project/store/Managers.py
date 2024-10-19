@@ -6,11 +6,8 @@ class ProductManager(models.Manager):
     def get_products_info_List(self):
         products = self.all()
         data = []
-
-
         for product in products:
             category_names = product.category.values_list("name")
-
             product_data = {
                 "name": product.name,
                 "categories": list(category_names),
@@ -21,20 +18,32 @@ class ProductManager(models.Manager):
                 "created_at": product.created_at,
                 "updated_at": product.updated_at,
             }
-
             data.append(product_data)
-
         return data
 
     def get_all_active_products(self):
         return self.filter(is_active=True)
+    
 
 
 class CategoryManager(models.Manager):
-    
+
+    def get_category_info_list(self):
+        categories = self.all()
+        data = []
+        for category in categories:
+            parent_name = category.parent.name if category.parent else None
+            category_data = {
+                "name": category.name,
+                "parent": parent_name,
+                "created_at": category.created_at,
+                "updated_at": category.updated_at,
+            }
+            data.append(category_data)
+        return data
+
     def get_category_summary(self):
         categories = self.prefetch_related("products").all()
-
         category_data = []
         for category in categories:
             products_summary = []
