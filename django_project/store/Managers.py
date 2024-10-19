@@ -7,6 +7,7 @@ class ProductManager(models.Manager):
         products = self.all()
         data = []
 
+
         for product in products:
             category_names = product.category.values_list("name")
 
