@@ -11,8 +11,6 @@ def product_test(request):
 
 def category_test(request):
     catgories = Category.objects.category_test()
-    for c in catgories:
-        print(f'{type(c)} --- {c}')
     return JsonResponse(catgories, safe=False)
 
 
