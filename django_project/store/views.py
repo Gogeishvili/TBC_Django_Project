@@ -4,11 +4,14 @@ from store.models import Product, Category
 from django.db.models import *
 
 
+def product_JSON(request):
+    products = Product.objects.get_products_info_List()
+    return JsonResponse(products, safe=False)
+
+
 def product(request):
     products = Product.objects.all()
-    return render(
-        request, "product.html", {"products": products}
-    )
+    return render(request, "product.html", {"products": products})
 
 
 def product_of_category(request):
@@ -17,12 +20,16 @@ def product_of_category(request):
     cheapest = Category.objects.get_cheapest_product()
     average_price = Category.objects.get_average_product_price()
 
-    return render(request, "productsOfCategory.html", {
-        'category_summary': category_summary,
-        'most_expensive': most_expensive,
-        'cheapest': cheapest,
-        'average_price': average_price
-    })
+    return render(
+        request,
+        "productsOfCategory.html",
+        {
+            "category_summary": category_summary,
+            "most_expensive": most_expensive,
+            "cheapest": cheapest,
+            "average_price": average_price,
+        },
+    )
 
 
 def category(request):
