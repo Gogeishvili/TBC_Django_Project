@@ -4,14 +4,15 @@ from store.models import Product, Category
 from django.db.models import *
 
 
-def product_test(request):
-    products = Product.objects.product_test()
-    return JsonResponse(products, safe=False)
+def test_JSON(request):
+    products = Product.objects.all().values()
+    return JsonResponse(list(products), safe=False)
 
 
-def category_test(request):
-    catgories = Category.objects.category_test()
-    return JsonResponse(catgories, safe=False)
+def test_HTML(request):
+    products = Product.objects.all()
+    products_list=list(Product.objects.all())
+    return render(request, "test.html", {"products": products_list})
 
 
 def product_JSON(request):

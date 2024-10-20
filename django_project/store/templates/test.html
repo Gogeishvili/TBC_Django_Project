@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+</head>
+<body>
+    {{products}}
+    {% for product in products %}
+        <div>
+            {{product}}
+        </div>
+        <div>
+            {%for category in product.category.all%}
+                <ul>
+                    {{category}}---{{category.parent}}
+                </ul>
+            {%endfor%}
+        </div>
+    {% endfor %}
+    
+</body>
+</html>
