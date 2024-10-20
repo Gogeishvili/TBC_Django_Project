@@ -6,7 +6,7 @@ from store.models import Category, Product
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "get_products")
     list_per_page = 2
-    search_fields = ('name',)
+    search_fields = ("name",)
 
     @admin.display(description="Products")
     def get_products(self, obj):
@@ -28,8 +28,12 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ("name", "category__name")
     list_select_related = ()
     list_editable = ("price", "quantity", "is_active")
-    list_per_page = 2
+    list_per_page = 5
     autocomplete_fields = ("category",)
+    filter_horizontal = ("category",)
+
+    actions=['set_quantity_zero']
+
 
     @admin.display(description="Categories")
     def get_categories(self, obj):
@@ -38,3 +42,7 @@ class ProductAdmin(admin.ModelAdmin):
     @admin.display(description="ჯამური ფასი")
     def get_total_price(self, obj):
         return obj.price * obj.quantity
+
+    @admin.action(description="set quantity Zero")
+    def set_quantity_zero(self, request, queryset):
+        queryset.update(quantity=0)
