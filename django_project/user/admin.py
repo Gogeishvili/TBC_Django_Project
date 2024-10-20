@@ -1,4 +1,12 @@
+# user/admin.py
 from django.contrib import admin
-from user.models import User
+from .models import User
 
-admin.site.register(User)
+@admin.register(User)
+class CustomUserAdmin(admin.ModelAdmin):
+    list_display = ('email', 'name', 'is_staff', 'is_active')
+    list_filter = ('is_staff', 'is_active')
+
+
+
+
