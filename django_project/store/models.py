@@ -1,6 +1,6 @@
 from math import trunc
 from django.db import models
-from store.Managers import ProductManager, CategoryManager
+from store.managers import ProductManager, CategoryManager
 
 
 class Category(models.Model):
