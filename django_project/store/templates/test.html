@@ -5,17 +5,36 @@
     <title>Categories</title>
 </head>
 <body>
-    {{products}}
+    Products Test
     {% for product in products %}
         <div>
             {{product}}
         </div>
         <div>
-            {%for category in product.category.all%}
-                <ul>
-                    {{category}}---{{category.parent}}
-                </ul>
+            categories:
+            <ul>
+            {%for cat in product.category.all%}
+                <li>
+                    {{cat}}
+                </li>
             {%endfor%}
+            </ul>
+        </div>
+    {% endfor %}
+    Categories Test
+    {% for category in categories %}
+        <div>
+            {{category}} --- {{category.products_count}}
+        </div>
+        <div>
+            products:
+            <ul>
+            {%for pro in category.products.all%}
+                <li>
+                    {{pro}}
+                </li>
+            {%endfor%}
+            </ul>
         </div>
     {% endfor %}
     

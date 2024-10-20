@@ -10,9 +10,13 @@ def test_JSON(request):
 
 
 def test_HTML(request):
-    products = Product.objects.all()
-    products_list=list(Product.objects.all())
-    return render(request, "test.html", {"products": products_list})
+    products = Product.objects.prefetch_related("category").all()
+    categories = Category.objects.prefetch_related("products").all().annotate(products_count=Count('products'))
+    return render(
+        request, "test.html", {
+            "products": products,
+            "categories": categories}
+    )
 
 
 def product_JSON(request):
@@ -26,7 +30,7 @@ def category_JSON(request):
 
 
 def product(request):
-    products = Product.objects.all()
+    products = Product.objects.get_all_active_products()
     return render(request, "product.html", {"products": products})
 
 
