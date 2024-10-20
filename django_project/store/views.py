@@ -4,11 +4,6 @@ from store.models import Product, Category
 from django.db.models import *
 
 
-def test_JSON(request):
-    products = Product.objects.all().values()
-    return JsonResponse(list(products), safe=False)
-
-
 def test_HTML(request):
     products = Product.objects.prefetch_related("category").all()
     categories = Category.objects.prefetch_related("products").all().annotate(products_count=Count('products'))
