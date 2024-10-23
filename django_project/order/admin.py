@@ -1,5 +1,5 @@
 from django.contrib import admin
-from order.models import UserCard
+from order.models import UserCart
 
-admin.site.register(UserCard)
+admin.site.register(UserCart)
 
