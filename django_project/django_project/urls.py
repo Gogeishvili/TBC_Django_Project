@@ -24,10 +24,12 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 
 
 urlpatterns = [
-    path("order/", include("order.urls",namespace='order')),
-    path("store/", include("store.urls",namespace='store')),
-    path("user/",include("user.urls",namespace='user')),
     path("admin/", admin.site.urls),
+    path("user/",include("user.urls",namespace='user')),
+
+
+    path("order/", include("order.urls",namespace='order')),
+    path("", include("store.urls",namespace='store')),
 ] + debug_toolbar_urls()
 
 

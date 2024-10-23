@@ -5,5 +5,5 @@ from order import views
 app_name='order'
 
 urlpatterns = [
-    path("", views.order_main_page, name="order_main_page"),
+    path("card/", views.order_main_page, name="order_main_page"),
 ]
