@@ -78,3 +78,6 @@ def category(request):
 def product(request):
     products = Product.objects.get_all_active_products()
     return render(request, "product.html", {"products": products})
+
+def contact(request):
+    return render(request,'contact.html',{})

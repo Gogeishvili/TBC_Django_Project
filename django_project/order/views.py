@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-def order_main_page(request):
-    return HttpResponse("Order main page")
 
+
+def cart(request):
+    return render(request,'cart.html',{})
+
+def checkout(request):
+    return render(request,'checkout.html',{})
