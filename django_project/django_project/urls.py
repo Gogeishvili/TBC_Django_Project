@@ -24,12 +24,13 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 
 
 urlpatterns = [
-    path("order/", include("order.urls")),
-    path("store/", include("store.urls")),
-    path("user/",include("user.urls")),
+    path("order/", include("order.urls",namespace='order')),
+    path("store/", include("store.urls",namespace='store')),
+    path("user/",include("user.urls",namespace='user')),
     path("admin/", admin.site.urls),
 ] + debug_toolbar_urls()
 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

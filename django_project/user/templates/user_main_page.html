@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Categories</title>
-</head>
-<body>
-    User
-</body>
-</html>
+
+{% extends "base.html" %}
+
+{% block title %}User page {% endblock title %}
+
+{% block content %}
+{{test_global_context}} {{user_id}}
+<a href="{% url 'store:product'%}">product List</a><br>
+{% endblock content  %}
+
+
+   
+

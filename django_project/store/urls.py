@@ -1,6 +1,7 @@
 from django.urls import path
 from store import views
 
+app_name='store'
 
 urlpatterns = [
     path('testHTML/',views.test_HTML,name='test_HTML'),

@@ -10,6 +10,7 @@
         {% for product in products %}
             <li>
                 <strong>{{ product.name }}</strong><br>
+               
                 Price: ${{ product.price }}<br>
                 Quantity: {{ product.quantity }}<br>
                 {% if product.image %}
