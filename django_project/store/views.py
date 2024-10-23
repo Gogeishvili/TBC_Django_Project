@@ -71,13 +71,13 @@ def category(request):
     categories_without_parent = Category.objects.filter(parent__isnull=True)
     return render(
         request,
-        "category.html",
+        "shop.html",
         {"categories_without_parent": categories_without_parent},
     )
 
 def product(request):
     products = Product.objects.get_all_active_products()
-    return render(request, "product.html", {"products": products})
+    return render(request, "shop-detail.html", {"products": products})
 
 def contact(request):
     return render(request,'contact.html',{})
