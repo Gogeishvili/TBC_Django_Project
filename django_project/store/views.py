@@ -14,12 +14,7 @@ def index(request):
 
 
 def category(request):
-    categories_without_parent = Category.objects.filter(parent__isnull=True)
-    return render(
-        request,
-        "shop.html",
-        {"categories_without_parent": categories_without_parent},
-    )
+    return render(request,"shop.html",{},)
 
 
 def product(request):
