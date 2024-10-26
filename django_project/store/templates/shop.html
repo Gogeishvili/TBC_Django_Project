@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <h4 class="mb-3">TAGS</h4>
+                                <h4 class="mb-3">Filter by Tag</h4>
                                 <form method="get" action="{% url 'store:category' %}">
                                     <input type="radio" class="me-2" id="tag-all" name="tag" value="" 
                                         {% if not selected_tag %}checked{% endif %} onchange="this.form.submit()">

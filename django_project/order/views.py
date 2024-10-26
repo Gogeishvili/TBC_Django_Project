@@ -1,17 +1,7 @@
-from django.shortcuts import render
-from django.shortcuts import render
-from store.models import Product, Category
 from django.db.models import *
-from django.views.decorators.csrf import csrf_exempt
-from django.core.files.storage import FileSystemStorage
-from django.conf import settings
-from store.forms import ProductFormTest,ProductForm
-from django.utils.text import slugify
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product
-from django.contrib.auth.decorators import login_required
 from order.models import UserCart
-from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from store.models import Product
 from .models import UserCart
@@ -51,3 +41,4 @@ def add_to_cart(request, product_id):
     return render(request, 'store/shop_test.html', {
         'products': Product.objects.all()
     })
+
