@@ -42,7 +42,7 @@ class AddToCartView(View):
         else:
             cart_item.quantity = quantity
         
-        cart_item.save()  #
+        cart_item.save()
 
         
         product.quantity -= quantity

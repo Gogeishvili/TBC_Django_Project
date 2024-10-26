@@ -1,14 +1,14 @@
 from django.db import models
 from user.models import User
 from store.models import Product
-from order.managers import UserCartManager
+
 
 
 class UserCart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.user.username}'s Cart"
+        return f"Cart of {self.user.email}"
 
 class CartItem(models.Model):
     cart = models.ForeignKey(UserCart, related_name='items', on_delete=models.CASCADE) 
