@@ -4,7 +4,6 @@ from store.managers import ProductManager, CategoryManager
 from django.utils.text import slugify
 
 
-
 class Category(models.Model):
     name = models.CharField(max_length=30)
     parent = models.ForeignKey(
@@ -14,14 +13,15 @@ class Category(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    objects = CategoryManager()
+
     def __str__(self):
         return f"{self.name}"
 
 
-    objects = CategoryManager()
-
 class ProductTags(models.Model):
     name = models.CharField(max_length=30)
+
     def __str__(self):
         return f"{self.name}"
 
@@ -38,10 +38,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
+    objects = ProductManager()
 
     def __str__(self):
         return f"{self.name}"
-
-
-    objects = ProductManager()

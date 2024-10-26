@@ -4,50 +4,48 @@ from django.db import models
 class ProductManager(models.Manager):
 
     def get_product_data(self):
-        
+
         products = self.filter(is_active=True)
         product_data = []
 
         for product in products:
-            sum_price = product.price * product.quantity  
-            
+            sum_price = product.price * product.quantity
+
             product_info = {
-                'id': product.id,
-                'name': product.name,
-                'image': product.image.url if product.image else None,  
-                'price': product.price,  
-                'quantity': product.quantity,
-                'sum_price': sum_price, 
-                'category': [category.name for category in product.category.all()],  
-                'tags': [tag.name for tag in product.tag.all()],  
-                'slug': product.slug,
-                'created_at': product.created_at,
-                'updated_at': product.updated_at,
+                "id": product.id,
+                "name": product.name,
+                "image": product.image.url if product.image else None,
+                "price": product.price,
+                "quantity": product.quantity,
+                "sum_price": sum_price,
+                "category": [category.name for category in product.category.all()],
+                "tags": [tag.name for tag in product.tag.all()],
+                "slug": product.slug,
+                "created_at": product.created_at,
+                "updated_at": product.updated_at,
             }
             product_data.append(product_info)
-        
+
         return product_data
-    
+
     def get_product_by_id(self, product_id):
         try:
             product = self.get(id=product_id)
             return {
-                'id': product.id,
-                'name': product.name,
-                'image': product.image.url if product.image else None,
-                'price': product.price,
-                'quantity': product.quantity,
-                'category': [category.name for category in product.category.all()],
-                'tags': [tag.name for tag in product.tag.all()],
-                'slug': product.slug,
-                'created_at': product.created_at,
-                'updated_at': product.updated_at,
-                'sum_price': product.price * product.quantity
+                "id": product.id,
+                "name": product.name,
+                "image": product.image.url if product.image else None,
+                "price": product.price,
+                "quantity": product.quantity,
+                "category": [category.name for category in product.category.all()],
+                "tags": [tag.name for tag in product.tag.all()],
+                "slug": product.slug,
+                "created_at": product.created_at,
+                "updated_at": product.updated_at,
+                "sum_price": product.price * product.quantity,
             }
         except:
-            return None 
-    
-    
+            return None
 
 
 class CategoryManager(models.Manager):

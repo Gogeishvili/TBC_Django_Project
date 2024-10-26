@@ -1,12 +1,12 @@
 from django.contrib import admin
-from store.models import Category, Product,ProductTags
+from store.models import Category, Product, ProductTags
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("name", "parent_category", "get_products")  
+    list_display = ("name", "parent_category", "get_products")
     search_fields = ("name",)
-    prepopulated_fields = {"slug": ("name",)} 
+    prepopulated_fields = {"slug": ("name",)}
 
     @admin.display(description="Parent Category")
     def parent_category(self, obj):
@@ -22,12 +22,12 @@ class CategoryAdmin(admin.ModelAdmin):
 class ProductTagsAdmin(admin.ModelAdmin):
     list_display = ("name", "get_products")
     search_fields = ("name",)
-    
 
     @admin.display(description="Products")
     def get_products(self, obj):
         products = obj.products.all()
         return ", ".join([product.name for product in products])
+
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -47,15 +47,14 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 5
     autocomplete_fields = ("category",)
     filter_horizontal = ("category",)
-    prepopulated_fields = {"slug": ("name",)} 
+    prepopulated_fields = {"slug": ("name",)}
 
-    actions=['set_quantity_zero']
-
+    actions = ["set_quantity_zero"]
 
     @admin.display(description="Categories")
     def get_categories(self, obj):
         return ", ".join([category.name for category in obj.category.all()])
-    
+
     @admin.display(description="Tags")
     def get_product_tag(self, obj):
         return ", ".join([category.name for category in obj.category.all()])
