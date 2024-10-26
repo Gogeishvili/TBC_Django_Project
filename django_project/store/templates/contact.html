@@ -5,8 +5,8 @@
 {% block content %}
 
 
-{% include "partials/single_page_hero.html" %}
 {% block Single_Page_Name %}CONTACT{% endblock Single_Page_Name %}
+{% include "partials/single_page_hero.html" with page_name="Home" breadcrumb_item="Contact" %}
 
 <!-- Contact Start -->
 <div class="container-fluid contact py-5">

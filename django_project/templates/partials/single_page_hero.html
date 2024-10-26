@@ -1,10 +1,10 @@
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">{% block Single_Page_Name %}BASE{% endblock Single_Page_Name %}</h1>
+    <h1 class="text-center text-white display-6">{% block Single_Page_Name %}{{ page_name|default:"" }}{% endblock Single_Page_Name %}</h1>
     <ol class="breadcrumb justify-content-center mb-0">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-white">BASE</li>
+        <li class="breadcrumb-item active text-white">{{ page_name|default:"" }}</li>
+        <li class="breadcrumb-item active text-white">{{ breadcrumb_item|default:"" }}</li>
     </ol>
 </div>
 <!-- Single Page Header End -->
