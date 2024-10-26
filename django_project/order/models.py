@@ -19,5 +19,5 @@ class CartItem(models.Model):
         return self.product.price * self.quantity
 
     def __str__(self):
-        return f"{self.product.name} in {self.cart.user.username}'s Cart"
+        return f"{self.product.name} in {self.cart.user.name}'s Cart"
     

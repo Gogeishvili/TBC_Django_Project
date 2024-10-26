@@ -5,9 +5,7 @@ from order.models import UserCart,CartItem
 
 class CartItemInline(admin.TabularInline):
     model = CartItem
-    extra = 0  # Number of empty forms to display (0 means no extra forms)
-
-    # Optional: Customize which fields to display
+    extra = 0  
     fields = ('product', 'quantity', 'get_product_price', 'get_total_price')
     readonly_fields = ('get_product_price', 'get_total_price')
 
@@ -21,7 +19,7 @@ class CartItemInline(admin.TabularInline):
 
 @admin.register(UserCart)
 class UserCartAdmin(admin.ModelAdmin):
-    inlines = [CartItemInline]  # Include the CartItemInline in the UserCartAdmin
+    inlines = [CartItemInline] 
     list_display = ('user', 'get_total_cart_price', 'product_count')
 
     def get_total_cart_price(self, obj):
