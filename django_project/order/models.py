@@ -16,3 +16,11 @@ class UserCart(models.Model):
         return f"{self.user.name}'s {self.name}"
     def product_count(self):
         return self.products.count()
+
+class CartItem(models.Model):
+    user_cart = models.ForeignKey(UserCart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        unique_together = ('user_cart', 'product')

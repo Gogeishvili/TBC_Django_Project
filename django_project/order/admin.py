@@ -18,19 +18,23 @@ class UserCartAdmin(admin.ModelAdmin):
 
     @admin.display(description="Product Count")
     def product_count_display(self, obj):
-        return obj.product_count()
+        return sum(cart_item.quantity for cart_item in obj.cartitem_set.all())
     
     @admin.display(description="Products (Name and ID)")
     def get_products(self, obj):
-        return ", ".join([f"{product.name} (ID: {product.id})" for product in obj.products.all()])
+        products_info = [
+            f"{item.product.name} (ID: {item.product.id}, Quantity: {item.quantity})"
+            for item in obj.cartitem_set.all()
+        ]
+        return ", ".join(products_info)
 
     @admin.display(description="Total Price")
     def get_total_price(self, obj):
-        total_price = sum(product.price for product in obj.products.all())
+        total_price = sum(item.product.price * item.quantity for item in obj.cartitem_set.all())
         return total_price
 
     @admin.action(description="Clear Cart")
     def clear_cart(self, request, queryset):
         for cart in queryset:
-            cart.products.clear()  
+            cart.cartitem_set.all().delete()  
 

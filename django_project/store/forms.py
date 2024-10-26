@@ -45,8 +45,16 @@ class ProductFormTest(forms.ModelForm):
             return slug
         raise ValidationError('This field is required.')
 
+
+
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
         exclude=['is_active','slug']  
+    
+    def clean_quantity(self):
+        quantity = self.cleaned_data.get('quantity')
+        if quantity < 0:
+            raise ValidationError('Quantity must be positive.')
+        return quantity

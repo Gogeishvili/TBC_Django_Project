@@ -14,7 +14,7 @@ from order.models import UserCart
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from store.models import Product
-from .models import UserCart
+from .models import UserCart,CartItem
 from .forms import UserCartForm
 
 
@@ -33,24 +33,29 @@ def add_to_cart(request, product_id):
 
     if request.method == 'POST':
         form = UserCartForm(request.POST)
-        
+
         if form.is_valid():
             quantity = form.cleaned_data['quantity']
             if quantity > product.quantity:
                 form.add_error('quantity', "Not enough stock available for this product.")
-                return render(request, 'store/sho_text.html', {
+                return render(request, 'store/shop_text.html', {
                     'form': form,
                     'products': Product.objects.all()
                 })
 
-           
             user_cart, created = UserCart.objects.get_or_create(user=request.user)
-            cart_item, created = user_cart.products.through.objects.get_or_create(
-                usercart=user_cart,
+
+            cart_item, created = CartItem.objects.get_or_create(
+                user_cart=user_cart,
                 product=product,
-            )        
+            )
+            cart_item.quantity += quantity
             cart_item.save()
-            return redirect('store:category')  
+            
+            product.quantity -= quantity
+            product.save()
+
+            return redirect('store:category')
 
     else:
         form = UserCartForm()  
