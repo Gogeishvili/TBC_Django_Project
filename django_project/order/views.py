@@ -34,10 +34,8 @@ class AddToCartView(View):
         if quantity > product.quantity:
             return redirect('store:category')  
         
-       
         user_cart, created = UserCart.objects.get_or_create(user=request.user)
 
-       
         cart_item, created = CartItem.objects.get_or_create(cart=user_cart, product=product)
         if not created: 
             cart_item.quantity += quantity
