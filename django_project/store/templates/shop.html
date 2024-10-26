@@ -28,8 +28,11 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <h4 class="mb-2">Price</h4>
-                                    <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
-                                    <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
+                                    <form method="get" action="{% url 'store:category' %}" id="price-filter-form">
+                                        <label for="rangeInput">Filter by Price:</label>
+                                        <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="5" value="0" oninput="amount.value=rangeInput.value; this.form.submit()">
+                                        <output id="amount" name="amount" for="rangeInput">0</output>
+                                    </form>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -56,26 +59,27 @@
                             </div>
                             <div class="col-lg-12">
                                 <h4 class="mb-3">TAGS</h4>
-                                <div class="mb-2">
-                                    <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
-                                    <label for="Categories-1"> Organic</label>
-                                </div>
-                                <div class="mb-2">
-                                    <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
-                                    <label for="Categories-2"> Fresh</label>
-                                </div>
-                                <div class="mb-2">
-                                    <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
-                                    <label for="Categories-3"> Sales</label>
-                                </div>
-                                <div class="mb-2">
-                                    <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
-                                    <label for="Categories-4"> Discount</label>
-                                </div>
-                                <div class="mb-2">
-                                    <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
-                                    <label for="Categories-5"> Expired</label>
-                                </div>
+                                <form method="get" action="{% url 'store:category' %}">
+                                    <h4 class="mb-3">TAGS</h4>
+                                
+                                    <input type="radio" class="me-2" id="tag-all" name="tag" value="" 
+                                        {% if not selected_tag %}checked{% endif %} onchange="this.form.submit()">
+                                    <label for="tag-all">All Tags</label><br>
+                                
+                                  
+                                    {% for tag in all_tags %}
+                                        <div class="mb-2">
+                                            <input type="radio" class="me-2" id="tag-{{ tag.id }}" 
+                                                name="tag" value="{{ tag.name }}" onchange="this.form.submit()" 
+                                                {% if selected_tag == tag.name %}checked{% endif %}>
+                                            <label for="tag-{{ tag.id }}">{{ tag.name }}</label>
+                                        </div>
+                                    {% endfor %}
+                                
+                                    <input type="hidden" name="search" value="{{ search_query }}">
+                                    <input type="hidden" name="category" value="{{ selected_category }}">
+                                </form>
+                                
                             </div>
                         </div>
                     </div>

@@ -8,7 +8,7 @@ from django.conf import settings
 from store.forms import ProductFormTest,ProductForm
 from django.utils.text import slugify
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product
+from .models import Product,ProductTags
 from django.contrib.auth.decorators import login_required
 from order.models import UserCart
 from django.core.paginator import Paginator
@@ -71,28 +71,36 @@ def index(request):
 def category(request):
     products = Product.objects.filter(is_active=True)
     categories = Category.objects.filter(products__is_active=True).distinct()
+    all_tags = ProductTags.objects.all() 
 
-    # Search functionality
+   
     search_query = request.GET.get('search', '')
     if search_query:
         products = products.filter(name__icontains=search_query)
 
-    # Category filter
+    
     selected_category = request.GET.get('category')
     if selected_category:
         products = products.filter(category__id=selected_category)
 
-    # Pagination
-    paginator = Paginator(products, 6)  # Show 6 products per page
-    page_number = request.GET.get('page')  # Get the page number from the URL
-    products = paginator.get_page(page_number)  # Get the products for the current page
+    
+    selected_tag = request.GET.get('tag')  
+    if selected_tag:
+        products = products.filter(tag__name=selected_tag)  
+
+    
+    paginator = Paginator(products, 6) 
+    page_number = request.GET.get('page')  
+    products = paginator.get_page(page_number)  
 
     return render(request, "shop.html", {
         "products": products,
         "categories": categories,
         "search_query": search_query,
         "selected_category": selected_category,
-        "paginator": paginator,  # Pass paginator to the template
+        "selected_tag": selected_tag,  
+        "all_tags": all_tags,  
+        "paginator": paginator,  
     })
 
 
