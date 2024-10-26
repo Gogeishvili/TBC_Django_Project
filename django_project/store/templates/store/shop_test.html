@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+</head>
+<body>
+    <h1>Products</h1>
+    
+    <!-- Search Form -->
+    <form method="get" action="{% url 'store:product' %}">
+        <input type="text" name="search" placeholder="Search by product name" value="{{ search_query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Category Filter -->
+    <form method="get" action="{% url 'store:product' %}">
+        <select name="category" onchange="this.form.submit()">
+            <option value="">All Categories</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id|stringformat:"s" == selected_category %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+        <input type="hidden" name="search" value="{{ search_query }}"> <!-- Preserve search query -->
+        <button type="submit">Filter</button>
+    </form>
+
+    <!-- Products List -->
+    <ul>
+        {% for product in products %}
+        <li>
+            <h2>{{ product.name }}</h2>
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width: 150px;">
+            {% endif %}
+            <p>Price: ${{ product.price }}</p>
+            <p>Available Quantity: {{ product.quantity }}</p>
+            <p>Tags: {{ product.tag.all|join:", " }}</p>
+            <form action="{% url 'order:add_to_cart' product.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <label for="quantity_{{ product.id }}">Quantity:</label>
+                <input type="number" id="quantity_{{ product.id }}" name="quantity" min="1" max="{{ product.quantity }}" value="1">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

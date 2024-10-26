@@ -28,33 +28,26 @@ def chackout(request):
     return render(request,'chackout.html',{})
 
 def add_to_cart(request, product_id):
-    
     product = get_object_or_404(Product, id=product_id)
-
     if request.method == 'POST':
         form = UserCartForm(request.POST)
-
         if form.is_valid():
             quantity = form.cleaned_data['quantity']
             if quantity > product.quantity:
                 form.add_error('quantity', "Not enough stock available for this product.")
-                return render(request, 'store/shop_text.html', {
+                return render(request, 'store/shop_test.html', {
                     'form': form,
                     'products': Product.objects.all()
                 })
-
             user_cart, created = UserCart.objects.get_or_create(user=request.user)
-
-           
             user_cart.add_product(product, quantity)
             product.quantity -= quantity
             product.save()
-
             return redirect('store:category')
 
     else:
         form = UserCartForm()
 
-    return render(request, 'store/shop_text.html', {
+    return render(request, 'store/shop_test.html', {
         'products': Product.objects.all()
     })

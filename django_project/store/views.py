@@ -68,12 +68,27 @@ def index(request):
 
 def category(request):
     products = Product.objects.filter(is_active=True)
-    return render(request, 'store/shop_text.html', {'products': products})
+    return render(request, 'store/shop_test.html', {'products': products})
 
 
 def product(request):
-    products = Product.objects.get_all_active_products()
-    return render(request, "shop-detail.html", {"products": products})
+    products = Product.objects.filter(is_active=True)
+    categories = Category.objects.filter(products__is_active=True).distinct()
+
+    search_query = request.GET.get('search', '')
+    if search_query:
+        products = products.filter(name__icontains=search_query)
+
+    selected_category = request.GET.get('category')
+    if selected_category:
+        products = products.filter(category__id=selected_category)
+
+    return render(request, "store/shop_test.html", {
+        "products": products,
+        "categories": categories,
+        "search_query": search_query,
+        "selected_category": selected_category,
+    })
 
 
 def contact(request):
