@@ -66,15 +66,16 @@ class UpdateCartView(View):
 
         return redirect('order:cart')
 
-class DeleteFromCartView(View):
-    def post(self, request, *args, **kwargs):
-        product_id = request.POST.get('product_id')
+class RemoveFromCartView(View):
+    def post(self, request, product_id):
+        
         user_cart = get_object_or_404(UserCart, user=request.user)
-
-        try:
-            cart_item = CartItem.objects.get(cart=user_cart, product_id=product_id)
-            cart_item.delete()
-        except CartItem.DoesNotExist:
-            pass  
-
+        
+       
+        cart_item = get_object_or_404(CartItem, cart=user_cart, product_id=product_id)
+        
+        
+        cart_item.delete()
+        
+       
         return redirect('order:cart')
