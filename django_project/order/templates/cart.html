@@ -6,6 +6,24 @@
 
 {% include "partials/single_page_hero.html" with page_name="Shop info" breadcrumb_item="Cart" %}
 
+{% if products %}
+    <ul>
+        {% for product in products %}
+            <li>
+                <strong>{{ product.product.name }}</strong> - 
+                Quantity: {{ product.quantity }} - 
+                Price: {{ product.product.price }} - 
+                Total: {{ product.total_price }} - 
+                <img src="{{ product.product.image }}" alt="{{ product.product.name }}">
+            </li>
+        {% endfor %}
+    </ul>
+    <h3>Total Count: {{ user_cart.product_count }}</h3>
+    <h3>Total Price: {{ user_cart.get_total_price }}</h3>
+{% else %}
+    <p>Your cart is empty.</p>
+{% endif %}
+
 
 <!-- Cart Page Start -->
 <div class="container-fluid py-5">

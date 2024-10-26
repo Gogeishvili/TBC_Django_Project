@@ -21,10 +21,10 @@ class UserCartAdmin(admin.ModelAdmin):
     
     @admin.display(description="Products (Name and ID)")
     def get_products(self, obj):
-        products_info = [
-            f"{product.name} (ID: {product.id}, Quantity: {obj.quantities[str(product.id)]})"
-            for product in obj.products.all()
-        ]
+        products_info = []
+        for product in obj.products.all():
+            quantity = obj.quantities.get(str(product.id), 0) 
+            products_info.append(f"{product.name} (ID: {product.id}, Quantity: {quantity})")
         return ", ".join(products_info)
 
     @admin.display(description="Total Price")
