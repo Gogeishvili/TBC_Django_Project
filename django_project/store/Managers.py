@@ -28,24 +28,24 @@ class ProductManager(models.Manager):
 
         return product_data
 
-    # def get_product_by_id(self, product_id):
-    #     try:
-    #         product = self.get(id=product_id)
-    #         return {
-    #             "id": product.id,
-    #             "name": product.name,
-    #             "image": product.image.url if product.image else None,
-    #             "price": product.price,
-    #             "quantity": product.quantity,
-    #             "category": [category.name for category in product.category.all()],
-    #             "tags": [tag.name for tag in product.tag.all()],
-    #             "slug": product.slug,
-    #             "created_at": product.created_at,
-    #             "updated_at": product.updated_at,
-    #             "sum_price": product.price * product.quantity,
-    #         }
-    #     except:
-    #         return None
+    def get_product_by_id(self, product_id):
+        try:
+            product = self.get(id=product_id)
+            return {
+                "id": product.id,
+                "name": product.name,
+                "image": product.image.url if product.image else None,
+                "price": product.price,
+                "quantity": product.quantity,
+                "category": [category.name for category in product.category.all()],
+                "tags": [tag.name for tag in product.tag.all()],
+                "slug": product.slug,
+                "created_at": product.created_at,
+                "updated_at": product.updated_at,
+                "sum_price": product.price * product.quantity,
+            }
+        except:
+            return None
 
 
 class CategoryManager(models.Manager):
