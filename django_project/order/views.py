@@ -14,7 +14,7 @@ from order.models import UserCart
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from store.models import Product
-from .models import UserCart,CartItem
+from .models import UserCart
 from .forms import UserCartForm
 
 
@@ -45,20 +45,15 @@ def add_to_cart(request, product_id):
 
             user_cart, created = UserCart.objects.get_or_create(user=request.user)
 
-            cart_item, created = CartItem.objects.get_or_create(
-                user_cart=user_cart,
-                product=product,
-            )
-            cart_item.quantity += quantity
-            cart_item.save()
-            
+           
+            user_cart.add_product(product, quantity)
             product.quantity -= quantity
             product.save()
 
             return redirect('store:category')
 
     else:
-        form = UserCartForm()  
+        form = UserCartForm()
 
     return render(request, 'store/shop_text.html', {
         'products': Product.objects.all()

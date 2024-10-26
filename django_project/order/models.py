@@ -5,22 +5,27 @@ from order.managers import UserCartManager
 
 
 class UserCart(models.Model):
-    name = models.CharField(max_length=30, default="user cart")
-    user = models.OneToOneField(User, verbose_name="user_cart", on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product, related_name="user_cart", blank=True)
+    quantities = models.JSONField(default=dict)  # To store quantities for each product
 
+    def add_product(self, product, quantity):
+        if product.id in self.quantities:
+            self.quantities[product.id] += quantity
+        else:
+            self.quantities[product.id] = quantity
+        self.save()
 
-    objects = UserCartManager()
+    def get_total_price(self):
+        total_price = 0
+        for product_id, quantity in self.quantities.items():
+            product = Product.objects.get(id=product_id)
+            total_price += product.price * quantity
+        return total_price
 
-    def __str__(self):
-        return f"{self.user.name}'s {self.name}"
     def product_count(self):
-        return self.products.count()
+        return sum(self.quantities.values())
 
-class CartItem(models.Model):
-    user_cart = models.ForeignKey(UserCart, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
-
-    class Meta:
-        unique_together = ('user_cart', 'product')
+    def clear_cart(self):
+        self.quantities.clear()
+        self.save()
