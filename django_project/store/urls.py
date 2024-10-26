@@ -4,11 +4,12 @@ from store import views
 app_name='store'
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path('test/',views.test,name='store_test'),
+    path('test_form/',views.form_test,name='store_test_form'),
     path("category/", views.category, name="category"),
     path("product/", views.product, name="product"),
     path("contact/",views.contact,name="contact"),
-    path('test/',views.test_2,name='test_2'),
+    path("", views.index, name="index"),
 ]
 
 

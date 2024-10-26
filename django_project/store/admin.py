@@ -1,18 +1,33 @@
 from django.contrib import admin
-from store.models import Category, Product
+from store.models import Category, Product,ProductTags
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("name", "get_products")
-    list_per_page = 2
+    list_display = ("name", "parent_category", "get_products")  
     search_fields = ("name",)
+    prepopulated_fields = {"slug": ("name",)} 
+
+    @admin.display(description="Parent Category")
+    def parent_category(self, obj):
+        return obj.parent.name if obj.parent else "None"
 
     @admin.display(description="Products")
     def get_products(self, obj):
         products = obj.products.all()
         return ", ".join([product.name for product in products])
 
+
+@admin.register(ProductTags)
+class ProductTagsAdmin(admin.ModelAdmin):
+    list_display = ("name", "get_products")
+    search_fields = ("name",)
+    
+
+    @admin.display(description="Products")
+    def get_products(self, obj):
+        products = obj.products.all()
+        return ", ".join([product.name for product in products])
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -21,6 +36,7 @@ class ProductAdmin(admin.ModelAdmin):
         "price",
         "quantity",
         "get_categories",
+        "get_product_tag",
         "is_active",
         "get_total_price",
     )
@@ -31,6 +47,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 5
     autocomplete_fields = ("category",)
     filter_horizontal = ("category",)
+    prepopulated_fields = {"slug": ("name",)} 
 
     actions=['set_quantity_zero']
 
@@ -38,8 +55,12 @@ class ProductAdmin(admin.ModelAdmin):
     @admin.display(description="Categories")
     def get_categories(self, obj):
         return ", ".join([category.name for category in obj.category.all()])
+    
+    @admin.display(description="Tags")
+    def get_product_tag(self, obj):
+        return ", ".join([category.name for category in obj.category.all()])
 
-    @admin.display(description="ჯამური ფასი")
+    @admin.display(description="Total Price")
     def get_total_price(self, obj):
         return obj.price * obj.quantity
 

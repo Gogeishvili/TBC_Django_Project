@@ -7,7 +7,7 @@ class ProductManager(models.Manager):
         products = self.all()
         data = []
         for product in products:
-            category_names = product.category.values_list("name")
+            category_names = product.category.values_list("name", flat=True)
             product_data = {
                 "name": product.name,
                 "categories": list(category_names),
@@ -23,6 +23,9 @@ class ProductManager(models.Manager):
 
     def get_all_active_products(self):
         return self.filter(is_active=True)
+
+    def get_product_with_catgeroy_tag(self):
+        return self.get_all_active_products().prefetch_related('category', 'tag')
     
 
 
