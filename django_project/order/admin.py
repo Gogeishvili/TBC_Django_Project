@@ -16,7 +16,6 @@ class CartItemInline(admin.TabularInline):
     def get_total_price(self, obj):
         return obj.product.price * obj.quantity if obj.product else "N/A"
 
-    get_total_price.short_description = "Total Price"
 
 
 @admin.register(UserCart)

@@ -51,7 +51,6 @@ class UpdateCartView(View):
         product_id = request.POST.get("product_id")
         quantity = int(request.POST.get("quantity", 1))
         user_cart = get_object_or_404(UserCart, user=request.user)
-
         cart_item = get_object_or_404(CartItem, cart=user_cart, product_id=product_id)
 
         if quantity <= 0:
