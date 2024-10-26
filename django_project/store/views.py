@@ -11,6 +11,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product
 from django.contrib.auth.decorators import login_required
 from order.models import UserCart
+from django.core.paginator import Paginator
+
 
 
 def test(request):
@@ -68,27 +70,34 @@ def index(request):
 
 def category(request):
     products = Product.objects.filter(is_active=True)
-    return render(request, 'store/shop_test.html', {'products': products})
-
-
-def product(request):
-    products = Product.objects.filter(is_active=True)
     categories = Category.objects.filter(products__is_active=True).distinct()
 
+    # Search functionality
     search_query = request.GET.get('search', '')
     if search_query:
         products = products.filter(name__icontains=search_query)
 
+    # Category filter
     selected_category = request.GET.get('category')
     if selected_category:
         products = products.filter(category__id=selected_category)
 
-    return render(request, "store/shop_test.html", {
+    # Pagination
+    paginator = Paginator(products, 6)  # Show 6 products per page
+    page_number = request.GET.get('page')  # Get the page number from the URL
+    products = paginator.get_page(page_number)  # Get the products for the current page
+
+    return render(request, "shop.html", {
         "products": products,
         "categories": categories,
         "search_query": search_query,
         "selected_category": selected_category,
+        "paginator": paginator,  # Pass paginator to the template
     })
+
+
+def product(request):
+    pass
 
 
 def contact(request):
