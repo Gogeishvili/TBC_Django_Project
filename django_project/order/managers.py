@@ -6,27 +6,42 @@ class UserCartManager(models.Manager):
     def get_or_create_cart(self, user):
         return self.get_or_create(user=user)
 
-    def add_product(self, user, product_id, quantity):
+    def add_product(self, user, product, quantity):
+        user_cart, created = self.get_or_create(user=user)
         
-        if not user.is_authenticated:
-            return False, "You need to log in to add products to the cart."
-
-        product = get_object_or_404(Product, id=product_id)
-        user_cart, _ = self.get_or_create(user=user)
-
-        if quantity < 1:
-            return False, "Quantity must be at least 1."
-
-        if quantity > product.quantity:
-            return False, f"Only {product.quantity} unit(s) available."
-
-        if product not in user_cart.products.all():
-            user_cart.products.add(product)
-            message = f"{quantity} unit(s) of {product.name} added to your cart."
+        if str(product.id) in user_cart.quantities:
+            user_cart.quantities[str(product.id)]['quantity'] += quantity
         else:
-            message = "Product is already in your cart."
+            user_cart.quantities[str(product.id)] = {
+                'name': product.name,
+                'price': float(product.price),
+                'quantity': quantity,
+                'image_url': product.image.url if product.image else None,
+            }
+        user_cart.save()
+        return user_cart
+    
+    def add_product(self, product, quantity):
+        if str(product.id) in self.quantities:
+            self.quantities[str(product.id)] += quantity
+        else:
+            self.quantities[str(product.id)] = quantity
+        self.save()
 
-        product.quantity -= quantity
-        product.save()
+    def get_total_price(self):
+        total_price = 0
+        for product_id, quantity in self.quantities.items():
+            try:
+                product = Product.objects.get(id=product_id)
+                total_price += product.price * quantity
+            except Product.DoesNotExist:
+                continue
+        return total_price
 
-        return True, message
+    def product_count(self):
+        return sum(self.quantities.values())
+
+    def clear_cart(self):
+        self.quantities.clear()
+        self.products.clear()
+        self.save()

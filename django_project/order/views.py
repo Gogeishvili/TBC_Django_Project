@@ -1,66 +1,82 @@
 from django.db.models import *
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product
 from order.models import UserCart
-from django.shortcuts import get_object_or_404, redirect
 from store.models import Product
-from .models import UserCart
+from .models import UserCart,CartItem
 from .forms import UserCartForm
 from django.views.generic import *
-
 
 
 def chackout(request):
     return render(request,'chackout.html',{})
 
-def add_to_cart(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    if request.method == 'POST':
-        form = UserCartForm(request.POST)
-        if form.is_valid():
-            quantity = form.cleaned_data['quantity']
-            if quantity > product.quantity:
-                form.add_error('quantity', "Not enough stock available for this product.")
-                return render(request, 'store/shop_test.html', {
-                    'form': form,
-                    'products': Product.objects.all()
-                })
-            user_cart, created = UserCart.objects.get_or_create(user=request.user)
-            user_cart.add_product(product, quantity)
-            product.quantity -= quantity
-            product.save()
-            return redirect('store:category')
-
-    else:
-        form = UserCartForm()
-
-    return render(request, 'store/shop_test.html', {
-        'products': Product.objects.all()
-    })
-
 class UserCartView(ListView):
-    model = UserCart
-    template_name = "cart.html"
-    context_object_name = "user_cart"
+    model = CartItem
+    template_name = 'cart.html'  
 
     def get_queryset(self):
-        user_cart, created = UserCart.objects.get_or_create(user=self.request.user)
-        return user_cart
+        return CartItem.objects.filter(cart__user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user_cart = self.get_queryset()
-
-        context['products'] = []  
-
-        for product_id, quantity in user_cart.quantities.items():
-            product_data = Product.objects.get_product_by_id(product_id)  
-            if product_data: 
-                context['products'].append({ 
-                    'product': product_data,
-                    'quantity': quantity,
-                    'total_price': product_data['sum_price'] * quantity,
-                })
-
+        cart_items = self.get_queryset()
+        total_price = sum(item.get_total_price() for item in cart_items)
+        context['total_price'] = total_price
         return context
 
+
+class AddToCartView(View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        quantity = int(request.POST.get('quantity', 1))  
+        product = get_object_or_404(Product, id=product_id)
+
+        if quantity > product.quantity:
+            return redirect('store:category')  
+        
+       
+        user_cart, created = UserCart.objects.get_or_create(user=request.user)
+
+       
+        cart_item, created = CartItem.objects.get_or_create(cart=user_cart, product=product)
+        if not created: 
+            cart_item.quantity += quantity
+        else:
+            cart_item.quantity = quantity
+        
+        cart_item.save()  #
+
+        
+        product.quantity -= quantity
+        product.save()
+        
+        return redirect('order:cart')  
+
+class UpdateCartView(View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        quantity = int(request.POST.get('quantity', 1))
+        user_cart = get_object_or_404(UserCart, user=request.user)
+
+        cart_item = get_object_or_404(CartItem, cart=user_cart, product_id=product_id)
+
+        if quantity <= 0:
+            cart_item.delete()
+        else:
+            cart_item.quantity = quantity
+            cart_item.save()
+
+        return redirect('order:cart')
+
+class DeleteFromCartView(View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        user_cart = get_object_or_404(UserCart, user=request.user)
+
+        try:
+            cart_item = CartItem.objects.get(cart=user_cart, product_id=product_id)
+            cart_item.delete()
+        except CartItem.DoesNotExist:
+            pass  
+
+        return redirect('order:cart')

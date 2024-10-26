@@ -6,59 +6,66 @@
 
 {% include "partials/single_page_hero.html" with page_name="Shop info" breadcrumb_item="Cart" %}
 
+
 <!-- Cart Page Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="table-responsive">
             <table class="table">
                 <thead>
-                  <tr>
-                    <th scope="col">Products</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Handle</th>
-                  </tr>
+                    <tr>
+                        <th scope="col">Products</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Handle</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        {% if products %}
-                        <ul>
-                            {% for product in products %}
-                            <th scope="row">
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ product.product.image }}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                                </div>
-                            </th>
-                            <td>
-                                <p class="mb-0 mt-4">{{ product.product.name }}</p>
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">{{ product.product.price }} GEL</p>
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">{{ product.product.price }} KG</p>
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">{{ product.total_price }}</p>
-                            </td>
-                            <td>
-                                <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                                    <i class="fa fa-times text-danger"></i>
-                                </button>
-                            </td>
-                        
+                    {% if object_list %}
+                        {% for product in object_list %}
+                            <tr>
+                                <th scope="row">
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ product.product.image }}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                    </div>
+                                </th>
+                                <td>
+                                    <p class="mb-0 mt-4">{{ product.product.name }}</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0 mt-4">{{ product.product.price }} GEL</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0 mt-4">{{ product.quantity }}</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0 mt-4">{{ product.get_total_price }} GEL</p>
+                                </td>
+                                <td>
+                                    <button class="btn btn-md rounded-circle bg-light border mt-4">
+                                        <i class="fa fa-times text-danger"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center">Your cart is empty.</td>
                         </tr>
-                             {% endfor %}
-                        </ul>
-
-                        {% endif %}
+                    {% endif %}
                 </tbody>
             </table>
+            {% if object_list %}
+                <div class="mt-4">
+                    <h5>Total Cart Price: {{ total_price }} GEL</h5>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
+
 <!-- Cart Page End -->
    
 {% endblock content %}
