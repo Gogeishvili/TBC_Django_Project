@@ -7,7 +7,7 @@ from order.managers import UserCartManager
 class UserCart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product, related_name="user_cart", blank=True)
-    quantities = models.JSONField(default=dict)  # To store quantities for each product
+    quantities = models.JSONField(default=dict)
 
     def add_product(self, product, quantity):
         if product.id in self.quantities:

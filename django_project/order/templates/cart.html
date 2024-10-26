@@ -6,25 +6,6 @@
 
 {% include "partials/single_page_hero.html" with page_name="Shop info" breadcrumb_item="Cart" %}
 
-{% if products %}
-    <ul>
-        {% for product in products %}
-            <li>
-                <strong>{{ product.product.name }}</strong> - 
-                Quantity: {{ product.quantity }} - 
-                Price: {{ product.product.price }} - 
-                Total: {{ product.total_price }} - 
-                <img src="{{ product.product.image }}" alt="{{ product.product.name }}">
-            </li>
-        {% endfor %}
-    </ul>
-    <h3>Total Count: {{ user_cart.product_count }}</h3>
-    <h3>Total Price: {{ user_cart.get_total_price }}</h3>
-{% else %}
-    <p>Your cart is empty.</p>
-{% endif %}
-
-
 <!-- Cart Page Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
@@ -42,114 +23,37 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">
-                            <div class="d-flex align-items-center">
-                                <img src="img/vegetable-item-3.png" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                            </div>
-                        </th>
-                        <td>
-                            <p class="mb-0 mt-4">Big Banana</p>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">2.99 $</p>
-                        </td>
-                        <td>
-                            <div class="input-group quantity mt-4" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                    <i class="fa fa-minus"></i>
-                                    </button>
+                        {% if products %}
+                        <ul>
+                            {% for product in products %}
+                            <th scope="row">
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ product.product.image }}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
                                 </div>
-                                <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">2.99 $</p>
-                        </td>
-                        <td>
-                            <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                                <i class="fa fa-times text-danger"></i>
-                            </button>
-                        </td>
-                    
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <div class="d-flex align-items-center">
-                                <img src="img/vegetable-item-5.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="" alt="">
-                            </div>
-                        </th>
-                        <td>
-                            <p class="mb-0 mt-4">Potatoes</p>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">2.99 $</p>
-                        </td>
-                        <td>
-                            <div class="input-group quantity mt-4" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                    <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">2.99 $</p>
-                        </td>
-                        <td>
-                            <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                                <i class="fa fa-times text-danger"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <div class="d-flex align-items-center">
-                                <img src="img/vegetable-item-2.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="" alt="">
-                            </div>
-                        </th>
-                        <td>
-                            <p class="mb-0 mt-4">Awesome Brocoli</p>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">2.99 $</p>
-                        </td>
-                        <td>
-                            <div class="input-group quantity mt-4" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                    <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4">2.99 $</p>
-                        </td>
-                        <td>
-                            <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                                <i class="fa fa-times text-danger"></i>
-                            </button>
-                        </td>
-                    </tr>
+                            </th>
+                            <td>
+                                <p class="mb-0 mt-4">{{ product.product.name }}</p>
+                            </td>
+                            <td>
+                                <p class="mb-0 mt-4">{{ product.product.price }} GEL</p>
+                            </td>
+                            <td>
+                                <p class="mb-0 mt-4">{{ product.product.price }} KG</p>
+                            </td>
+                            <td>
+                                <p class="mb-0 mt-4">{{ product.total_price }}</p>
+                            </td>
+                            <td>
+                                <button class="btn btn-md rounded-circle bg-light border mt-4" >
+                                    <i class="fa fa-times text-danger"></i>
+                                </button>
+                            </td>
+                        
+                        </tr>
+                             {% endfor %}
+                        </ul>
+
+                        {% endif %}
                 </tbody>
             </table>
         </div>

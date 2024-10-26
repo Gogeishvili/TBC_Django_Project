@@ -50,15 +50,17 @@ class UserCartView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_cart = self.get_queryset()
-    
-        context['products'] = [
-            {
-                'product': Product.objects.get_product_by_id(product_id),  # Use the new method
-                'quantity': quantity,
-                'total_price': Product.objects.get_product_by_id(product_id)['sum_price'] * quantity,
-            }
-            for product_id, quantity in user_cart.quantities.items() if Product.objects.get_product_by_id(product_id)
-        ]
-        
+
+        context['products'] = []  
+
+        for product_id, quantity in user_cart.quantities.items():
+            product_data = Product.objects.get_product_by_id(product_id)  
+            if product_data: 
+                context['products'].append({ 
+                    'product': product_data,
+                    'quantity': quantity,
+                    'total_price': product_data['sum_price'] * quantity,
+                })
+
         return context
 
