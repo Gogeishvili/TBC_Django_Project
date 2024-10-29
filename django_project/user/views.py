@@ -27,7 +27,6 @@ class LoginView(LoginView):
     next_page = reverse_lazy('store:index')  
 
     def dispatch(self, request, *args, **kwargs):
-
         if request.user.is_authenticated:
             return redirect(self.next_page)
         return super().dispatch(request, *args, **kwargs)
