@@ -5,6 +5,9 @@ from django.shortcuts import render
 from .models import Product, ProductTags
 from django.views.generic import *
 from store.forms import *
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.decorators import method_decorator
 
 
 def index(request):
@@ -14,12 +17,13 @@ def index(request):
 def contact(request):
     return render(request, "contact.html", {})
 
-
-class CategoryView(ListView):
+@method_decorator(login_required(login_url='user:login'),name='dispatch')
+class CategoryView(LoginRequiredMixin ,ListView):
     model = Product
     template_name = "shop.html"
     context_object_name = "products"
     paginate_by = 6
+    
 
     def get_queryset(self):
         queryset = Product.objects.filter(is_active=True)
