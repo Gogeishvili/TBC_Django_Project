@@ -1,21 +1,21 @@
 from django.shortcuts import render
-from .forms import RegisterForm,LoginForm 
+from .forms import RegisterForm, LoginForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
+from django.contrib.auth import login,logout
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView,LogoutView
-from django.contrib.auth import logout
+from django.contrib.auth.views import LoginView, LogoutView
+
 
 
 class RegisterView(FormView):
-    template_name = 'register.html'
+    template_name = "register.html"
     form_class = RegisterForm
-    success_url = reverse_lazy('store:index')
+    success_url = reverse_lazy("store:index")
 
     def form_valid(self, form):
-        user = form.save()  
-        login(self.request, user) 
+        user = form.save()
+        login(self.request, user)
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -23,9 +23,9 @@ class RegisterView(FormView):
 
 
 class LoginView(LoginView):
-    template_name = 'login.html'  
+    template_name = "login.html"
     authentication_form = LoginForm
-    next_page = reverse_lazy('store:index')  
+    next_page = reverse_lazy("store:index")
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -34,25 +34,21 @@ class LoginView(LoginView):
 
     def form_valid(self, form):
         login(self.request, form.get_user())
-        return redirect(self.next_page)  
+        return redirect(self.next_page)
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-
 class LogOutView(LogoutView):
-    next_page=reverse_lazy('store:index')
+    next_page = reverse_lazy("store:index")
 
     def get(self, request, *args, **kwargs):
-        return self.post(request, *args, **kwargs)
+        if self.request.user.is_authenticated:
+            logout(request)
+            return redirect(self.next_page)
 
 
 
-
-def user_main_page(request,user_id):
-    return render(
-        request, "index.html", {
-            'user_id':user_id
-        }
-    )
+def user_main_page(request, user_id):
+    return render(request, "index.html", {"user_id": user_id})
