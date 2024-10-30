@@ -45,8 +45,9 @@ class LogOutView(View):
     next_page = reverse_lazy('store:index')  
 
     def get(self, request, *args, **kwargs):
-        logout(request)
-        return redirect(self.next_page) 
+        if request.user.is_authenticated:
+            logout(request)
+        return redirect(self.next_page)
 
 
 
