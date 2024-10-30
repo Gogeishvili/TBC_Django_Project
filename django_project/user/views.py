@@ -5,6 +5,7 @@ from django.contrib.auth import login,logout
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
+from django.views import View
 
 
 
@@ -40,13 +41,12 @@ class LoginView(LoginView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-class LogOutView(LogoutView):
-    next_page = reverse_lazy("store:index")
+class LogOutView(View):
+    next_page = reverse_lazy('store:index')  
 
     def get(self, request, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            logout(request)
-            return redirect(self.next_page)
+        logout(request)
+        return redirect(self.next_page) 
 
 
 
