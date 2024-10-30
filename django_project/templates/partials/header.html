@@ -19,6 +19,10 @@
                             </div>
                         </div>
                         <a href="{% url 'store:contact' %}" class="nav-item nav-link">Contact</a>
+                        <form method="post" action="{% url 'user:log_out' %}">
+                            {% csrf_token %}
+                            <button type="submit">Logout</button>
+                        </form>
                     </div>
                 </div>
             </nav>

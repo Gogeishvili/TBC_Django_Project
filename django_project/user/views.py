@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView,LogoutView
+from django.contrib.auth import logout
 
 
 class RegisterView(FormView):
@@ -40,6 +41,11 @@ class LoginView(LoginView):
 
 
 
+class LogOutView(LogoutView):
+    next_page=reverse_lazy('store:index')
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 
 
 

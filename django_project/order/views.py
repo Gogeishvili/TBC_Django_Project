@@ -4,12 +4,15 @@ from order.models import UserCart
 from store.models import Product
 from .models import UserCart, CartItem
 from django.views.generic import *
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 
 
 def chackout(request):
     return render(request, "chackout.html", {})
 
-
+@method_decorator(login_required(login_url='user:login'),name='dispatch')
 class UserCartView(ListView):
     model = CartItem
     template_name = "cart.html"

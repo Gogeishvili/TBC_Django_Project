@@ -6,7 +6,6 @@ from .models import Product, ProductTags
 from django.views.generic import *
 from store.forms import *
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 
 
@@ -18,7 +17,7 @@ def contact(request):
     return render(request, "contact.html", {})
 
 @method_decorator(login_required(login_url='user:login'),name='dispatch')
-class CategoryView(LoginRequiredMixin ,ListView):
+class CategoryView(ListView):
     model = Product
     template_name = "shop.html"
     context_object_name = "products"
