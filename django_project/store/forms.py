@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from store.models import Product
+from .models import Product
 from django.utils.text import slugify
 
 

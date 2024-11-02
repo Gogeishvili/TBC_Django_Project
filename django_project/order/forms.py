@@ -1,5 +1,4 @@
 from django import forms
-from .models import UserCart
 from store.models import Product
 
 class UserCartForm(forms.Form):

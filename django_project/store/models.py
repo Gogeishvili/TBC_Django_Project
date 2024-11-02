@@ -1,7 +1,5 @@
-from math import trunc
 from django.db import models
-from django_project.store.managers import ProductManager, CategoryManager
-from django.utils.text import slugify
+from .managers import ProductManager, CategoryManager
 
 
 class Category(models.Model):
