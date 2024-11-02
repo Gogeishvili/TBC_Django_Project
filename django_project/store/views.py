@@ -17,7 +17,12 @@ class ContactView(TemplateView):
 
 
 class ProductView(DetailView):
-    pass
+    template_name='product.html'
+    model=Product
+    context_object_name='product'
+
+    def get_object(self, queryset=None):
+        return Product.objects.get(pk=self.kwargs['product_id'])
 
 
 @method_decorator(login_required(login_url="user:login"), name="dispatch")
@@ -52,5 +57,6 @@ class CategoryView(ListView):
         context["search_query"] = self.request.GET.get("search", "")
         context["selected_category"] = self.request.GET.get("category")
         context["selected_tag"] = self.request.GET.get("tag")
+
 
         return context

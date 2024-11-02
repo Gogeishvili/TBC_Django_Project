@@ -77,7 +77,8 @@
                     <div class="col-lg-9">
                         <div class="row g-4 justify-content-center">
                             {% for product in products %}
-                                <div class="col-md-6 col-lg-6 col-xl-4">
+                                <div class="col-md-6 col-lg-6 col-xl-4" >
+                                <a href="{% url 'store:product_view' product.id %}">
                                     <div class="rounded position-relative fruite-item">
                                         {% if product.image %}
                                             <div class="fruite-img">
@@ -102,6 +103,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                </a>
                                 </div>
                             {% endfor %}
                             <div class="col-12">
