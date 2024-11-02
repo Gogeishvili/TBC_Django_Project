@@ -5,9 +5,9 @@
 </head>
 <body>
 
-    <h1>User Page for User ID: {{ user_id }}</h1>
+    <h1>User Page for User ID: {{ user.id }}</h1>
     <p>User: {{ user.name }}</p>
-    <p>Is Authenticated: {{ user.is_authenticated }}</p>  <!-- Debugging line -->
+    <p>Is Authenticated: {{ user.is_authenticated }}</p> 
 
     {% if user.is_authenticated %}
         <form method="post" action="{% url 'user:log_out' %}">

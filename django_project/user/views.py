@@ -5,6 +5,9 @@ from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import DetailView
+from .models import User
 
 
 class RegisterView(FormView):
@@ -39,3 +42,13 @@ def user_page(request, user_id):
         "user_id": user_id,
         "user": request.user 
     })
+
+@method_decorator(login_required, name='dispatch')
+class UserPageView(DetailView):
+    template_name='user_page.html'
+    model=User
+    context_object_name='user'
+
+    def get_object(self, queryset = ...):
+        return self.request.user
+
