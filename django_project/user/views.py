@@ -35,20 +35,11 @@ class LogOutView(LogoutView):
     next_page = reverse_lazy("store:index")
 
 
-@login_required  
-def user_page(request, user_id):
-    print(f"User: {request.user}, Is Authenticated: {request.user.is_authenticated}")  
-    return render(request, "user_page.html", {
-        "user_id": user_id,
-        "user": request.user 
-    })
-
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name="dispatch")
 class UserPageView(DetailView):
-    template_name='user_page.html'
-    model=User
-    context_object_name='user'
+    template_name = "user_page.html"
+    model = User
+    context_object_name = "user"
 
-    def get_object(self, queryset = ...):
+    def get_object(self, queryset=...):
         return self.request.user
-

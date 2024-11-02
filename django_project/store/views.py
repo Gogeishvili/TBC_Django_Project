@@ -16,6 +16,10 @@ class ContactView(TemplateView):
     template_name = "contact.html"
 
 
+class ProductView(DetailView):
+    pass
+
+
 @method_decorator(login_required(login_url="user:login"), name="dispatch")
 class CategoryView(ListView):
     model = Product
