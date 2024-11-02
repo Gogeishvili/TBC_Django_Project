@@ -50,9 +50,7 @@ class CategoryView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.filter(
-            products__is_active=True
-        ).distinct()
+        context["categories"] = Category.objects.filter( products__is_active=True).distinct()
         context["all_tags"] = ProductTags.objects.all()
         context["search_query"] = self.request.GET.get("search", "")
         context["selected_category"] = self.request.GET.get("category")

@@ -46,6 +46,10 @@
                         <a href="{% url 'user:user_page' user_id=user.id %}" class="my-auto">
                             <i class="fas fa-user fa-2x"></i>
                         </a>
+                        {% else %}
+                        <a href="{% url 'user:login'%}" class="my-auto">
+                            <i class="fas fa-user fa-2x"></i>
+                        </a>
                         {% endif %}
                     </div>
                 </div>
