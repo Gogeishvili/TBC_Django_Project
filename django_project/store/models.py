@@ -1,6 +1,6 @@
 from math import trunc
 from django.db import models
-from django_project.store.Managers_2 import ProductManager, CategoryManager
+from django_project.store.managers import ProductManager, CategoryManager
 from django.utils.text import slugify
 
 
