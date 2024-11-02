@@ -11,10 +11,6 @@ from django.utils.decorators import method_decorator
 class IndexView(TemplateView):
     template_name = "index.html"
 
-    def get(self, request, *args, **kwargs):
-        user_id = request.user.id
-        return render(request, self.template_name, {"user_id": user_id})
-
 
 class ContactView(TemplateView):
     template_name = "contact.html"
@@ -52,6 +48,5 @@ class CategoryView(ListView):
         context["search_query"] = self.request.GET.get("search", "")
         context["selected_category"] = self.request.GET.get("category")
         context["selected_tag"] = self.request.GET.get("tag")
-        context['user_id']=self.request.user.id
 
         return context
