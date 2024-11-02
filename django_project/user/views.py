@@ -4,6 +4,7 @@ from django.contrib.auth import login
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.decorators import login_required
 
 
 class RegisterView(FormView):
@@ -31,5 +32,10 @@ class LogOutView(LogoutView):
     next_page = reverse_lazy("store:index")
 
 
-def user_main_page(request, user_id):
-    return render(request, "index.html", {"user_id": user_id})
+@login_required  
+def user_page(request, user_id):
+    print(f"User: {request.user}, Is Authenticated: {request.user.is_authenticated}")  
+    return render(request, "user_page.html", {
+        "user_id": user_id,
+        "user": request.user 
+    })

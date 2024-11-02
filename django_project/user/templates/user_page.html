@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+    <h1>User Page for User ID: {{ user_id }}</h1>
+    <p>User: {{ user.name }}</p>
+    <p>Is Authenticated: {{ user.is_authenticated }}</p>  <!-- Debugging line -->
+
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'user:log_out' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <p>You are not logged in.</p>
+    {% endif %}
+
+</body>
+</html>
+

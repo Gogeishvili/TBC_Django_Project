@@ -68,7 +68,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "django_project.global_context.test_globa_context"
+                "django_project.global_context.test_globa_context",
             ],
         },
     },

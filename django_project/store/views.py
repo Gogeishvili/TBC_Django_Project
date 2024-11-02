@@ -2,26 +2,30 @@ from django.shortcuts import render
 from django.db.models import *
 from django.shortcuts import render
 from django.views.generic import *
-from .models import Product, ProductTags,Category
+from .models import Product, ProductTags, Category
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 
-def index(request):
-    return render(request, "index.html", {})
+class IndexView(TemplateView):
+    template_name = "index.html"
+
+    def get(self, request, *args, **kwargs):
+        user_id = request.user.id
+        return render(request, self.template_name, {"user_id": user_id})
 
 
-def contact(request):
-    return render(request, "contact.html", {})
+class ContactView(TemplateView):
+    template_name = "contact.html"
 
-@method_decorator(login_required(login_url='user:login'),name='dispatch')
+
+@method_decorator(login_required(login_url="user:login"), name="dispatch")
 class CategoryView(ListView):
     model = Product
     template_name = "shop.html"
     context_object_name = "products"
     paginate_by = 6
-    
 
     def get_queryset(self):
         queryset = Product.objects.filter(is_active=True)
@@ -48,5 +52,6 @@ class CategoryView(ListView):
         context["search_query"] = self.request.GET.get("search", "")
         context["selected_category"] = self.request.GET.get("category")
         context["selected_tag"] = self.request.GET.get("tag")
+        context['user_id']=self.request.user.id
 
         return context
