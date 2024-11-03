@@ -39,7 +39,6 @@ class LogOutView(LogoutView):
 class UserPageView(DetailView):
     template_name = "user_page.html"
     model = User
-    context_object_name = "user"
 
     def get_object(self, queryset=...):
         return self.request.user
