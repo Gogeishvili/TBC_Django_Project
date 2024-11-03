@@ -3,7 +3,7 @@ from django.db import models
 
 class ProductManager(models.Manager):
 
-    def get_product_data(self):
+    def get_products_data(self):
 
         products = self.filter(is_active=True)
         product_data = []

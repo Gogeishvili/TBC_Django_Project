@@ -22,7 +22,10 @@ class ProductView(DetailView):
     context_object_name='product'
 
     def get_object(self, queryset=None):
-        return Product.objects.get(pk=self.kwargs['product_id'])
+        product_id=self.kwargs.get('product_id')
+        return Product.objects.get_product_by_id(product_id=product_id)
+    
+        
 
 
 @method_decorator(login_required(login_url="user:login"), name="dispatch")
