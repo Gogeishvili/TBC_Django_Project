@@ -20,13 +20,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from debug_toolbar.toolbar import debug_toolbar_urls
-from . import views
+from .import views
 
 
 urlpatterns = [
     path("admin/", admin.site.urls,name='admin'),
     path("user/", include("user.urls", namespace="user")),
     path("order/", include("order.urls", namespace="order")),
+    path("404/", views.custom_404_view, name="404"),
+    path("500/", views.custom_500_view, name="500"),
     path("", include("store.urls", namespace="store")),
 ] + debug_toolbar_urls()
 

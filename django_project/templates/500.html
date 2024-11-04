@@ -1,12 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>505</title>
-</head>
-<body>
-    <h1>Something went wrong 505.</h1>
-    <p>Try refreshing the page, or <a href="{% url 'store:index' %}">return to the homepage</a>.</p>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        .centered-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+            text-align: center;
+        }
+
+        .centered-container h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .centered-container p {
+            font-size: 1.1rem;
+        }
+
+        .centered-container a {
+            font-size: 1.1rem;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .centered-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <div class="centered-container">
+        <h1>Something went wrong 500.</h1>
+        <p>Try refreshing the page, or <a href="{% url 'store:index' %}">return to the homepage</a>.</p>
+    </div>
+{% endblock content %}

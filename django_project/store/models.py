@@ -1,5 +1,13 @@
 from django.db import models
 from .managers import ProductManager, CategoryManager
+from django.utils.text import slugify
+
+
+def get_image_upload_path(instance, filename):
+    category = instance.category.first()
+    category_name = slugify(category.name) if category else "uncategorized"
+
+    return f"product/{category_name}/{filename}"
 
 
 class Category(models.Model):
@@ -37,8 +45,6 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     objects = ProductManager()
-
-
 
     def __str__(self):
         return f"{self.name}"
