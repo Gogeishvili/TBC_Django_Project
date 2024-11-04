@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.db.models import *
-from django.shortcuts import render
 from django.views.generic import *
 from .models import Product, ProductTags, Category
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 
 class IndexView(TemplateView):
@@ -30,6 +30,7 @@ class ProductView(DetailView):
 
 
 @method_decorator(login_required(login_url="user:login"), name="dispatch")
+@method_decorator(cache_page(60 * 15), name="dispatch")
 class CategoryView(ListView):
     model = Product
     template_name = "shop.html"
