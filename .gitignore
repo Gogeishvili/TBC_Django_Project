@@ -141,3 +141,6 @@ cython_debug/
 # PyCharm
 # Uncomment if you don't want to track PyCharm project files
 #.idea/
+
+
+static_common/
