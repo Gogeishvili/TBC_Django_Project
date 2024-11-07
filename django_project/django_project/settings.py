@@ -160,12 +160,12 @@ INTERNAL_IPS = [
 AUTH_USER_MODEL = "user.User"
 
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        "LOCATION": os.path.join(BASE_DIR, "cache"),
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+#         "LOCATION": os.path.join(BASE_DIR, "cache"),
+#     }
+# }
 
 LANGUAGES = [
     ("ka", "Georgian"), 
