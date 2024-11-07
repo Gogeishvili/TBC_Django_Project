@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 16:07+0400\n"
+"POT-Creation-Date: 2024-11-07 12:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,6 +30,10 @@ msgstr "აღწერა"
 msgid "Slug"
 msgstr "სლაგი"
 
-#: templates/partials/header.html:28
+#: templates/partials/header.html:56
 msgid "Home"
 msgstr "მთავარი"
+
+#: templates/partials/header.html:57
+msgid "Shop"
+msgstr "მაღაზია"
