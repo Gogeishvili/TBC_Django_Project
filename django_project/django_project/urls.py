@@ -21,16 +21,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 from debug_toolbar.toolbar import debug_toolbar_urls
 from .import views
+from django.conf.urls.i18n import i18n_patterns
+from django.conf.urls.i18n import set_language
 
-
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path("admin/", admin.site.urls,name='admin'),
     path("user/", include("user.urls", namespace="user")),
     path("order/", include("order.urls", namespace="order")),
     path("404/", views.custom_404_view, name="404"),
     path("500/", views.custom_500_view, name="500"),
+    path('set_language/',set_language, name='set_language'),
     path("", include("store.urls", namespace="store")),
-] + debug_toolbar_urls()
+    prefix_default_language=False
+) + debug_toolbar_urls()
 
 
 if settings.DEBUG:

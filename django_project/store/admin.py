@@ -39,11 +39,12 @@ class ProductAdmin(admin.ModelAdmin):
         "get_product_tag",
         "is_active",
         "get_total_price",
+        'title'
     )
     list_filter = ("category", "is_active")
     search_fields = ("name", "category__name")
     list_select_related = ()
-    list_editable = ("price", "quantity", "is_active")
+    list_editable = ("price", "quantity", "is_active",'title')
     list_per_page = 5
     autocomplete_fields = ("category",)
     filter_horizontal = ("category",)

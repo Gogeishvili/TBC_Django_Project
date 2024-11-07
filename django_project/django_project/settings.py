@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+from django.utils.translation import activate
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,9 @@ SECRET_KEY = "django-insecure-&m(lnuo_f%u-@$v&$bdllq=k&kb@o$yvaj(ltnog1_knbssb+$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1",]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -41,7 +44,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "order",
     "store",
-    "user"
+    "user",
 ]
 
 MIDDLEWARE = [
@@ -53,7 +56,9 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
 ]
+
 
 ROOT_URLCONF = "django_project.urls"
 
@@ -119,8 +124,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-USE_I18N=True
-USE_L10N=True
+USE_I18N = True
+USE_L10N = True
+
+
+
 
 TIME_ZONE = "UTC"
 
@@ -132,10 +140,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR /"static_common"
+STATIC_ROOT = BASE_DIR / "static_common"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-MEDIA_ROOT = BASE_DIR /"media"
+MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
 # Default primary key field type
@@ -149,12 +157,23 @@ INTERNAL_IPS = [
     # ...
 ]
 
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = "user.User"
 
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(BASE_DIR, 'cache'),  
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(BASE_DIR, "cache"),
     }
 }
+
+LANGUAGES = [
+    ("ka", "Georgian"), 
+    ("en", "English")
+]
+
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
+
