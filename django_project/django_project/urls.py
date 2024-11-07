@@ -21,8 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from debug_toolbar.toolbar import debug_toolbar_urls
 from .import views
-from django.conf.urls.i18n import i18n_patterns
-from django.conf.urls.i18n import set_language
+from django.conf.urls.i18n import i18n_patterns,set_language
 
 urlpatterns = i18n_patterns(
     path('set_language/',set_language, name='set_language'),

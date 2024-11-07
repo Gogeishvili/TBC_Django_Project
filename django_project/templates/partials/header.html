@@ -15,29 +15,23 @@
                 <div class="dropdown">
                     <button class="btn btn-link text-white dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         {% get_current_language as LANGUAGE_CODE %}
-                        {% if LANGUAGE_CODE == 'en' %}
-                            English
-                        {% elif LANGUAGE_CODE == 'ka' %}
-                            Georgian
-                        {% else %}
-                            {{ LANGUAGE_CODE }}
-                        {% endif %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            {% if lang_code == LANGUAGE_CODE %}
+                                {{ lang_name }} 
+                            {% endif %}
+                        {% endfor %}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                        <li>
-                            <form action="{% url 'set_language' %}" method="post" class="dropdown-item">
-                                {% csrf_token %}
-                                <input type="hidden" name="language" value="en">
-                                <button type="submit" class="btn btn-link">English</button>
-                            </form>
-                        </li>
-                        <li>
-                            <form action="{% url 'set_language' %}" method="post" class="dropdown-item">
-                                {% csrf_token %}
-                                <input type="hidden" name="language" value="ka">
-                                <button type="submit" class="btn btn-link">Georgian</button>
-                            </form>
-                        </li>
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <li>
+                                <form action="{% url 'set_language' %}" method="post" class="dropdown-item">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="language" value="{{ lang_code }}">
+                                    <button type="submit" class="btn btn-link w-100 text-start">{{ lang_name }}</button>
+                                </form>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <!-- Language Switcher -->
@@ -65,7 +59,7 @@
                     <a href="{% url 'store:contact' %}" class="nav-item nav-link">Contact</a>
                 </div>
             </div>
-            {% endcache %}
+           {% endcache %}
             <div class="d-flex m-3 me-0">
                 <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
                 {% if user.is_authenticated %}
