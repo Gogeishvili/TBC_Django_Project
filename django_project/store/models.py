@@ -4,12 +4,6 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 
-# def get_image_upload_path(instance, filename):
-#     category = instance.category.first()
-#     category_name = slugify(category.name) if category else "uncategorized"
-
-#     return f"product/{category_name}/{filename}"
-
 
 class Category(models.Model):
     name = models.CharField(max_length=30)
