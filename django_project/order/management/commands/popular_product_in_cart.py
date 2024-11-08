@@ -13,7 +13,7 @@ class Command(BaseCommand):
                 user_count=Count('cart__user', distinct=True),
                 total_quantity=Sum('quantity')
             )
-            .order_by('-user_count')[:3] 
+            .order_by('-quantity')[:3] 
         )
 
         if popular_products:
